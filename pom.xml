@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2018 Uppsala University Library
+  ~ Copyright 2019 Uppsala University Library
   ~
   ~ This file is part of Cora.
   ~
@@ -25,11 +25,11 @@
 		<version>0.8.6</version>
 	</parent>
 
-	<artifactId>alvintocorautils</artifactId>
-	<version>0.4-SNAPSHOT</version>
+	<artifactId>tocorautils</artifactId>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Alvin to Cora utils</name>
+	<name>To Cora utils</name>
 
 	<properties>
 		<clientdata.version>0.3.0</clientdata.version>
@@ -39,9 +39,9 @@
 	</properties>
 
 	<scm>
-		<connection>scm:git:https://github.com/lsu-ub-uu/alvin-tocorautils.git</connection>
-		<developerConnection>scm:git:https://github.com/lsu-ub-uu/alvin-tocorautils.git</developerConnection>
-		<url>https://github.com/lsu-ub-uu/alvin-tocorautils.git</url>
+		<connection>scm:git:https://github.com/lsu-ub-uu/cora-tocorautils.git</connection>
+		<developerConnection>scm:git:https://github.com/lsu-ub-uu/cora-tocorautils.git</developerConnection>
+		<url>https://github.com/lsu-ub-uu/cora-tocorautils.git</url>
 	  <tag>HEAD</tag>
   </scm>
 

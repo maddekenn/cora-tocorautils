@@ -72,7 +72,7 @@ public abstract class FromDbToCoraFactoryImp implements FromDbToCoraFactory {
 
 	protected abstract FromDbToCoraConverter createConverter(JsonBuilderFactory jsonFactory);
 
-	protected CoraClientFactory getCoraClientFactory() {
+	public CoraClientFactory getCoraClientFactory() {
 		// needed for test
 		return coraClientFactory;
 	}
