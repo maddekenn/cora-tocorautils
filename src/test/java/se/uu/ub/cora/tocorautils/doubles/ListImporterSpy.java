@@ -39,4 +39,10 @@ public class ListImporterSpy implements Importer {
 		return importResult;
 	}
 
+	@Override
+	public ImportResult updateInCora(List<CoraJsonRecord> listOfConvertedRows) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

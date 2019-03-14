@@ -22,15 +22,25 @@ import static org.testng.Assert.assertEquals;
 
 import org.testng.annotations.Test;
 
-import se.uu.ub.cora.tocorautils.CoraJsonRecord;
-
 public class CoraJsonRecordTest {
 	@Test
-	public void testClass() throws Exception {
+	public void testWithoutRecordId() throws Exception {
 		String recordType = "someRecordType";
 		String json = "json";
 		CoraJsonRecord coraJsonRecord = CoraJsonRecord.withRecordTypeAndJson(recordType, json);
 		assertEquals(coraJsonRecord.recordType, recordType);
+		assertEquals(coraJsonRecord.json, json);
+	}
+
+	@Test
+	public void testWithRecordId() throws Exception {
+		String recordType = "someRecordType";
+		String recordId = "someRecordId";
+		String json = "json";
+		CoraJsonRecord coraJsonRecord = CoraJsonRecord.withRecordTypeAndIdAndJson(recordType,
+				recordId, json);
+		assertEquals(coraJsonRecord.recordType, recordType);
+		assertEquals(coraJsonRecord.recordId, recordId);
 		assertEquals(coraJsonRecord.json, json);
 	}
 }

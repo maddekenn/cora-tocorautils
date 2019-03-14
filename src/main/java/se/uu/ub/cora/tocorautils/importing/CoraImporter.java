@@ -26,7 +26,6 @@ import se.uu.ub.cora.tocorautils.CoraJsonRecord;
 public final class CoraImporter implements Importer {
 
 	private CoraClient coraClient;
-	private ImportResult importResult;
 
 	public static CoraImporter usingCoraClient(CoraClient coraClient) {
 		return new CoraImporter(coraClient);
@@ -36,47 +35,66 @@ public final class CoraImporter implements Importer {
 		this.coraClient = coraClient;
 	}
 
-	private void createRecordForJson(String recordType, String jsonText) {
-		coraClient.create(recordType, jsonText);
-		importResult.noOfImportedOk++;
+	@Override
+	public ImportResult createInCora(List<List<CoraJsonRecord>> listOfConvertedRows) {
+		ImportResult importResult = new ImportResult();
+		createRecordsForRows(listOfConvertedRows, importResult);
+		return importResult;
 	}
 
-	private void addErrorImportResult(String jsonText, Exception e) {
+	private void createRecordsForRows(List<List<CoraJsonRecord>> listOfConvertedRows,
+			ImportResult importResult) {
+		for (List<CoraJsonRecord> listWithConvertedRow : listOfConvertedRows) {
+			createRecordForRow(listWithConvertedRow, importResult);
+		}
+	}
+
+	private void createRecordForRow(List<CoraJsonRecord> listWithConvertedRow,
+			ImportResult importResult) {
+		for (CoraJsonRecord coraJsonRecord : listWithConvertedRow) {
+			tryToCreateRecordForJson(coraJsonRecord, importResult);
+		}
+	}
+
+	private void tryToCreateRecordForJson(CoraJsonRecord coraJsonRecord,
+			ImportResult importResult) {
+		try {
+			String returnedJson = createRecordForJson(coraJsonRecord.recordType,
+					coraJsonRecord.json);
+			CoraJsonRecord updatedCoraJsonRecord = CoraJsonRecord
+					.withRecordTypeAndJson(coraJsonRecord.recordType, returnedJson);
+			importResult.returnedJsonRecords.add(updatedCoraJsonRecord);
+			importResult.noOfImportedOk++;
+		} catch (Exception e) {
+			String message = createErrorImportResult(coraJsonRecord.json, e);
+			importResult.listOfFails.add(message);
+		}
+	}
+
+	private String createRecordForJson(String recordType, String jsonText) {
+		return coraClient.create(recordType, jsonText);
+	}
+
+	private String createErrorImportResult(String jsonText, Exception e) {
 		String message = e.getMessage();
 		message += " json that failed: ";
 		message += jsonText;
-		importResult.listOfFails.add(message);
+		return message;
+	}
+
+	@Override
+	public ImportResult updateInCora(List<CoraJsonRecord> listOfConvertedRows) {
+		ImportResult importResult = new ImportResult();
+		for (CoraJsonRecord coraJsonRecord : listOfConvertedRows) {
+			coraClient.update(coraJsonRecord.recordType, coraJsonRecord.recordId,
+					coraJsonRecord.json);
+			importResult.noOfImportedOk++;
+		}
+		return importResult;
 	}
 
 	public CoraClient getCoraClient() {
 		// needed for test
 		return coraClient;
-	}
-
-	@Override
-	public ImportResult createInCora(List<List<CoraJsonRecord>> listOfConvertedRows) {
-		importResult = new ImportResult();
-		createRecordsForRows(listOfConvertedRows);
-		return importResult;
-	}
-
-	private void createRecordsForRows(List<List<CoraJsonRecord>> listOfConvertedRows) {
-		for (List<CoraJsonRecord> listWithConvertedRow : listOfConvertedRows) {
-			createRecordForRow(listWithConvertedRow);
-		}
-	}
-
-	private void createRecordForRow(List<CoraJsonRecord> listWithConvertedRow) {
-		for (CoraJsonRecord coraJsonRecord : listWithConvertedRow) {
-			tryToCreateRecordForJson(coraJsonRecord);
-		}
-	}
-
-	private void tryToCreateRecordForJson(CoraJsonRecord coraJsonRecord) {
-		try {
-			createRecordForJson(coraJsonRecord.recordType, coraJsonRecord.json);
-		} catch (Exception e) {
-			addErrorImportResult(coraJsonRecord.json, e);
-		}
 	}
 }

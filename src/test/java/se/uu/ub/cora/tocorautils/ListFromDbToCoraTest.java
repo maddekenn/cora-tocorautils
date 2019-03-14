@@ -29,19 +29,19 @@ import se.uu.ub.cora.tocorautils.doubles.RecordReaderFactorySpy;
 import se.uu.ub.cora.tocorautils.doubles.RecordReaderSpy;
 import se.uu.ub.cora.tocorautils.importing.ImportResult;
 
-public class FromDbToCoraTest {
+public class ListFromDbToCoraTest {
 
 	private FromDbToCoraConverterSpy toCoraConverter;
 	private RecordReaderFactorySpy recordReaderFactory;
 	private ListImporterSpy importer;
-	private FromDbToCoraImp fromDbToCora;
+	private ListFromDbToCoraImp fromDbToCora;
 
 	@BeforeMethod
 	public void beforeMethod() {
 		toCoraConverter = new FromDbToCoraConverterSpy();
 		recordReaderFactory = new RecordReaderFactorySpy();
 		importer = new ListImporterSpy();
-		fromDbToCora = (FromDbToCoraImp) FromDbToCoraImp
+		fromDbToCora = (ListFromDbToCoraImp) ListFromDbToCoraImp
 				.usingRecordReaderFactoryAndDbToCoraConverterAndImporter(recordReaderFactory,
 						toCoraConverter, importer);
 	}

@@ -22,6 +22,7 @@ public final class CoraJsonRecord {
 
 	public final String recordType;
 	public final String json;
+	public String recordId = null;
 
 	public static CoraJsonRecord withRecordTypeAndJson(String recordType, String json) {
 		return new CoraJsonRecord(recordType, json);
@@ -30,5 +31,16 @@ public final class CoraJsonRecord {
 	private CoraJsonRecord(String recordType, String json) {
 		this.recordType = recordType;
 		this.json = json;
+	}
+
+	public CoraJsonRecord(String recordType, String recordId, String json) {
+		this.recordType = recordType;
+		this.recordId = recordId;
+		this.json = json;
+	}
+
+	public static CoraJsonRecord withRecordTypeAndIdAndJson(String recordType, String recordId,
+			String json) {
+		return new CoraJsonRecord(recordType, recordId, json);
 	}
 }

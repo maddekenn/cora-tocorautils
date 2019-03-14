@@ -23,24 +23,24 @@ import java.util.Map;
 
 import se.uu.ub.cora.sqldatabase.RecordReader;
 import se.uu.ub.cora.sqldatabase.RecordReaderFactory;
-import se.uu.ub.cora.tocorautils.convert.FromDbToCoraConverter;
+import se.uu.ub.cora.tocorautils.convert.ListFromDbToCoraConverter;
 import se.uu.ub.cora.tocorautils.importing.ImportResult;
 import se.uu.ub.cora.tocorautils.importing.Importer;
 
-public final class FromDbToCoraImp implements FromDbToCora {
+public final class ListFromDbToCoraImp implements FromDbToCora {
 
-	private FromDbToCoraConverter fromDbToCoraConverter;
+	private ListFromDbToCoraConverter fromDbToCoraConverter;
 	private RecordReaderFactory recordReaderFactory;
 	private Importer importer;
 
 	public static FromDbToCora usingRecordReaderFactoryAndDbToCoraConverterAndImporter(
-			RecordReaderFactory recordReaderFactory, FromDbToCoraConverter fromDbToCoraConverter,
+			RecordReaderFactory recordReaderFactory, ListFromDbToCoraConverter fromDbToCoraConverter,
 			Importer importer) {
-		return new FromDbToCoraImp(recordReaderFactory, fromDbToCoraConverter, importer);
+		return new ListFromDbToCoraImp(recordReaderFactory, fromDbToCoraConverter, importer);
 	}
 
-	private FromDbToCoraImp(RecordReaderFactory recordReaderFactory,
-			FromDbToCoraConverter fromDbToCoraConverter, Importer importer) {
+	private ListFromDbToCoraImp(RecordReaderFactory recordReaderFactory,
+			ListFromDbToCoraConverter fromDbToCoraConverter, Importer importer) {
 		this.recordReaderFactory = recordReaderFactory;
 		this.fromDbToCoraConverter = fromDbToCoraConverter;
 		this.importer = importer;
@@ -61,7 +61,7 @@ public final class FromDbToCoraImp implements FromDbToCora {
 		return recordReaderFactory;
 	}
 
-	public FromDbToCoraConverter getFromDbToCoraConverter() {
+	public ListFromDbToCoraConverter getFromDbToCoraConverter() {
 		// needed for test
 		return fromDbToCoraConverter;
 	}

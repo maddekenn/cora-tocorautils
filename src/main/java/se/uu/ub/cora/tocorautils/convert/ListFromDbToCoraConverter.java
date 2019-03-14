@@ -23,6 +23,6 @@ import java.util.Map;
 
 import se.uu.ub.cora.tocorautils.CoraJsonRecord;
 
-public interface FromDbToCoraConverter {
+public interface ListFromDbToCoraConverter {
 	List<List<CoraJsonRecord>> convertToJsonFromRowsFromDb(List<Map<String, String>> rowsFromDb);
 }

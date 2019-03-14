@@ -31,7 +31,7 @@ public class FromDbToCoraFactoryTest {
 
 	@Test
 	public void factor() {
-		FromDbToCoraImp fromDbToCora = (FromDbToCoraImp) factorySpyUsedToTestParentAbstractClass
+		ListFromDbToCoraImp fromDbToCora = (ListFromDbToCoraImp) factorySpyUsedToTestParentAbstractClass
 				.factorFromDbToCora(coraClientFactory, coraClientConfig, dbConfig);
 
 		assertEquals(factorySpyUsedToTestParentAbstractClass.getCoraClientFactory(),

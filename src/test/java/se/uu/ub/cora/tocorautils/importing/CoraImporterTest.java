@@ -28,8 +28,6 @@ import org.testng.annotations.Test;
 
 import se.uu.ub.cora.tocorautils.CoraJsonRecord;
 import se.uu.ub.cora.tocorautils.doubles.CoraClientSpy;
-import se.uu.ub.cora.tocorautils.importing.CoraImporter;
-import se.uu.ub.cora.tocorautils.importing.ImportResult;
 
 public class CoraImporterTest {
 
@@ -52,10 +50,11 @@ public class CoraImporterTest {
 		ImportResult importResult = importer.createInCora(listOfConvertedRows);
 		assertEquals(coraClient.createdRecordTypes.size(), 3);
 		assertEquals(importResult.noOfImportedOk, 3);
-		String suffix = "";
-		int index = 0;
-
-		assertCorrectCreatedTextsAndItemUsingSuffixAndGroupNo(suffix, index);
+		assertEquals(importResult.returnedJsonRecords.size(), 3);
+		assertEquals(importResult.returnedJsonRecords.get(0).json, "created json text");
+		assertEquals(importResult.returnedJsonRecords.get(1).json, "created json def text");
+		assertEquals(importResult.returnedJsonRecords.get(2).json, "created json item");
+		assertCorrectCreatedTextsAndItemUsingSuffixAndGroupNo("", 0);
 	}
 
 	@Test
@@ -67,6 +66,7 @@ public class CoraImporterTest {
 		assertEquals(coraClient.createdRecordTypes.size(), 6);
 		assertEquals(importResult.noOfImportedOk, 6);
 
+		assertEquals(importResult.returnedJsonRecords.size(), 6);
 		assertCorrectCreatedTextsAndItemUsingSuffixAndGroupNo("", 0);
 		assertCorrectCreatedTextsAndItemUsingSuffixAndGroupNo("2", 1);
 	}
@@ -148,5 +148,24 @@ public class CoraImporterTest {
 
 		String jsonItem = "json item" + suffix;
 		convertedRow.add(CoraJsonRecord.withRecordTypeAndJson("countryCollectionItem", jsonItem));
+	}
+
+	@Test
+	public void testUpdate() {
+		List<CoraJsonRecord> convertedRow = new ArrayList<>();
+		convertedRow.add(
+				CoraJsonRecord.withRecordTypeAndIdAndJson("coraText", "recordId0", "json text0"));
+		convertedRow.add(
+				CoraJsonRecord.withRecordTypeAndIdAndJson("coraText", "recordId1", "json text1"));
+		convertedRow.add(
+				CoraJsonRecord.withRecordTypeAndIdAndJson("coraText", "recordId2", "json text2"));
+
+		ImportResult importResult = importer.updateInCora(convertedRow);
+		assertEquals(coraClient.updatedRecordTypes.size(), 3);
+		assertEquals(coraClient.updatedRecordIds.size(), 3);
+		assertEquals(coraClient.jsonStrings.size(), 3);
+		assertEquals(importResult.noOfImportedOk, 3);
+
+		// assertCorrectCreatedTextsAndItemUsingSuffixAndGroupNo(suffix, index);
 	}
 }

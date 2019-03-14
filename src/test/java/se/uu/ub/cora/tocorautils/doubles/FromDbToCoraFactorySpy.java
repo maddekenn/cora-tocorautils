@@ -20,13 +20,13 @@ package se.uu.ub.cora.tocorautils.doubles;
 
 import se.uu.ub.cora.json.builder.JsonBuilderFactory;
 import se.uu.ub.cora.tocorautils.FromDbToCoraFactoryImp;
-import se.uu.ub.cora.tocorautils.convert.FromDbToCoraConverter;
+import se.uu.ub.cora.tocorautils.convert.ListFromDbToCoraConverter;
 
 public class FromDbToCoraFactorySpy extends FromDbToCoraFactoryImp {
 	public FromDbToCoraConverterSpy createdConverter;
 
 	@Override
-	public FromDbToCoraConverter createConverter(JsonBuilderFactory jsonFactory) {
+	public ListFromDbToCoraConverter createConverter(JsonBuilderFactory jsonFactory) {
 		createdConverter = new FromDbToCoraConverterSpy();
 
 		return createdConverter;

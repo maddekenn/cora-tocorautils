@@ -21,9 +21,13 @@ package se.uu.ub.cora.tocorautils.importing;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.uu.ub.cora.tocorautils.CoraJsonRecord;
+
 public class ImportResult {
 
 	public int noOfImportedOk = 0;
+	public int noOfUpdatedOk = 0;
 	public List<String> listOfFails = new ArrayList<>();
+	public List<CoraJsonRecord> returnedJsonRecords = new ArrayList<>();
 
 }

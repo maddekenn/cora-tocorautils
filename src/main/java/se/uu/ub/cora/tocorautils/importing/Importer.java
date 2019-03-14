@@ -1,4 +1,5 @@
 /*
+
  * Copyright 2018 Uppsala University Library
  *
  * This file is part of Cora.
@@ -24,4 +25,6 @@ import se.uu.ub.cora.tocorautils.CoraJsonRecord;
 
 public interface Importer {
 	ImportResult createInCora(List<List<CoraJsonRecord>> listOfConvertedRows);
+
+	ImportResult updateInCora(List<CoraJsonRecord> listOfConvertedRows);
 }

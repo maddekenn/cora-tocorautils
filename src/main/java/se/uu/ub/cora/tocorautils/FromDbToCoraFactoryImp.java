@@ -27,7 +27,7 @@ import se.uu.ub.cora.json.builder.JsonBuilderFactory;
 import se.uu.ub.cora.json.builder.org.OrgJsonBuilderFactoryAdapter;
 import se.uu.ub.cora.sqldatabase.RecordReaderFactory;
 import se.uu.ub.cora.sqldatabase.RecordReaderFactoryImp;
-import se.uu.ub.cora.tocorautils.convert.FromDbToCoraConverter;
+import se.uu.ub.cora.tocorautils.convert.ListFromDbToCoraConverter;
 import se.uu.ub.cora.tocorautils.importing.CoraImporter;
 import se.uu.ub.cora.tocorautils.importing.Importer;
 
@@ -42,12 +42,12 @@ public abstract class FromDbToCoraFactoryImp implements FromDbToCoraFactory {
 
 		RecordReaderFactory recordReaderFactory = createRecordReaderFactory(dbConfig);
 		JsonBuilderFactory jsonFactory = createJsonBuilderFactory();
-		FromDbToCoraConverter fromDbToCoraConverter = createConverter(jsonFactory);
+		ListFromDbToCoraConverter fromDbToCoraConverter = createConverter(jsonFactory);
 
 		CoraClient coraClient = createCoraClient(coraClientFactory, coraClientConfig);
 		Importer importer = createImporter(coraClient);
 
-		return FromDbToCoraImp.usingRecordReaderFactoryAndDbToCoraConverterAndImporter(
+		return ListFromDbToCoraImp.usingRecordReaderFactoryAndDbToCoraConverterAndImporter(
 				recordReaderFactory, fromDbToCoraConverter, importer);
 	}
 
@@ -70,7 +70,7 @@ public abstract class FromDbToCoraFactoryImp implements FromDbToCoraFactory {
 		return CoraImporter.usingCoraClient(coraClient);
 	}
 
-	protected abstract FromDbToCoraConverter createConverter(JsonBuilderFactory jsonFactory);
+	protected abstract ListFromDbToCoraConverter createConverter(JsonBuilderFactory jsonFactory);
 
 	public CoraClientFactory getCoraClientFactory() {
 		// needed for test
